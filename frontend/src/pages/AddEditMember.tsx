@@ -1,7 +1,9 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
-import { Role, TeamMember } from "../types/types";
-import Divider from "../components/Divider";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Role, TeamMember } from "../types/types";
+
+import Divider from "../components/Divider";
+
 import { urlPrefix } from "../helpers";
 
 type AddEditMemberProps = {

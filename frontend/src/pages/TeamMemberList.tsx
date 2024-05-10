@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import Divider from "../components/Divider";
-import { capitalizeString, formatMobile, urlPrefix } from "../helpers";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+
+import Divider from "../components/Divider";
+
+import { capitalizeString, formatMobile, urlPrefix } from "../helpers";
 import { Role, TeamMember } from "../types/types";
-import { useNavigate } from "react-router-dom";
 
 const TeamMemberItem: React.FC<{ member: TeamMember }> = ({ member }) => {
   const navigate = useNavigate();
