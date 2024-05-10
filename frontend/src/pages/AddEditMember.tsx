@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { Role, TeamMember } from "../types/types";
 import Divider from "../components/Divider";
 import { useLocation, useNavigate } from "react-router-dom";
+import { urlPrefix } from "../helpers";
 
 type AddEditMemberProps = {
   isEditingMember: boolean;
@@ -44,8 +45,8 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
 
   const onSave = async () => {
     const url = isEditingMember
-      ? `http://localhost:8000/api/team_members/${member.id}`
-      : "http://localhost:8000/api/team_members";
+      ? `${urlPrefix}/api/team_members/${member.id}`
+      : `${urlPrefix}/api/team_members`;
     const method = isEditingMember ? "PUT" : "POST";
 
     try {
@@ -66,7 +67,7 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
   };
 
   const onDelete = async () => {
-    const url = `http://localhost:8000/api/team_members/${member.id}`;
+    const url = `${urlPrefix}/api/team_members/${member.id}`;
     const method = "DELETE";
 
     try {
@@ -100,7 +101,7 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
         </div>
         <Divider styles={{ marginTop: 32 }} />
       </>
-      <div style={{ fontWeight: "bold" }}>Info</div>
+      <div style={{ marginTop: 12, fontWeight: "bold" }}>Info</div>
       <form
         style={{
           display: "flex",
@@ -127,6 +128,14 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
         />
         <input
           type="text"
+          name="email"
+          value={member.email}
+          onChange={handleChange}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="text"
           name="phone_number"
           value={member.phone_number}
           // An improvement here would to add logic to display the formatted number with dashes
@@ -134,24 +143,33 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
           placeholder="Phone Number"
           required
         />
-        <input
-          type="text"
-          name="email"
-          value={member.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-        />
-        <select name="role" value={member.role} onChange={handleChange as any}>
-          <option value={Role.regular}>Regular - Can't delete members</option>
-          <option value={Role.admin}>Admin - Can delete members</option>
-        </select>
+        <div style={{ marginTop: 12, fontWeight: "bold" }}>Role</div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>Regular - Can't delete members</div>
+          <input
+            type="radio"
+            name={"role"}
+            value={Role.regular}
+            checked={member.role === Role.regular}
+            onChange={handleChange}
+          />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>Admin - Can delete members</div>
+          <input
+            type="radio"
+            name={"role"}
+            value={Role.admin}
+            checked={member.role === Role.admin}
+            onChange={handleChange}
+          />
+        </div>
       </form>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          marginTop: 10,
+          marginTop: 16,
         }}
       >
         {isEditingMember && (

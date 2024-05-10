@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Divider from "../components/Divider";
-import { capitalizeString, formatMobile } from "../helpers";
+import { capitalizeString, formatMobile, urlPrefix } from "../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Role, TeamMember } from "../types/types";
@@ -62,7 +62,7 @@ const TeamMemberList: React.FC = () => {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/team_members")
+    fetch(`${urlPrefix}/api/team_members`)
       .then((response) => response.json())
       .then((data) => setTeamMembers(data))
       .catch((error) => console.log("fetching team members error: ", error));
