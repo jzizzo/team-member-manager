@@ -1,72 +1,64 @@
 import { useState, useEffect } from "react";
 import Divider from "../components/Divider";
-import { capitalizeString } from "../helpers";
+import { capitalizeString, formatMobile } from "../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
-
-enum Role {
-  regular,
-  admin,
-}
-
-interface TeamMember {
-  id: number;
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-  role: Role;
-}
+import { Role, TeamMember } from "../types/types";
+import { useNavigate } from "react-router-dom";
 
 const TeamMemberItem: React.FC<{ member: TeamMember }> = ({ member }) => {
+  const navigate = useNavigate();
+
   const [isFocused, setIsFocused] = useState(false);
   const formattedName = `${capitalizeString(
     member.first_name
-  )} ${capitalizeString(member.last_name)}`;
-  const formattedMobile = `${member.phone_number.slice(
-    0,
-    3
-  )}-${member.phone_number.slice(3, 6)}-${member.phone_number.slice(6)}`;
+  )} ${capitalizeString(member.last_name)}${
+    member.role === Role.admin ? " (Admin)" : ""
+  }`;
   return (
-    <div
-      key={member.id}
-      style={{
-        borderRadius: 16,
-        backgroundColor: isFocused ? "lightgrey" : "white",
-        paddingLeft: 8,
-        margin: "5px 16px",
-      }}
-      onClick={() => console.log("clicked: ", formattedName)}
-      onMouseEnter={() => setIsFocused(true)}
-      onMouseLeave={() => setIsFocused(false)}
-    >
+    <div key={member.id}>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
+          borderRadius: 16,
+          backgroundColor: isFocused ? "lightgrey" : "white",
+          padding: 8,
+          margin: "5px 16px",
         }}
+        onClick={() => navigate(`/edit/:${member.id}`, { state: { member } })}
+        onMouseEnter={() => setIsFocused(true)}
+        onMouseLeave={() => setIsFocused(false)}
       >
-        <FontAwesomeIcon
-          icon={faUser}
-          size="2x"
+        <div
           style={{
-            alignSelf: "center",
+            display: "flex",
+            flexDirection: "row",
           }}
-        />
-        <div style={{ paddingLeft: 16 }}>
-          <div style={{ paddingTop: 8, fontWeight: "bold" }}>
-            {formattedName}
+        >
+          <FontAwesomeIcon
+            icon={faUser}
+            size="2x"
+            style={{
+              alignSelf: "center",
+            }}
+          />
+          <div style={{ paddingLeft: 16 }}>
+            <div style={{ fontWeight: "bold" }}>{formattedName}</div>
+            <div style={{ paddingTop: 4, color: "grey" }}>
+              {formatMobile(member.phone_number)}
+            </div>
+            <div
+              style={{ paddingTop: 4, color: "grey" }}
+            >{`${member.email.toLowerCase()}`}</div>
           </div>
-          <div style={{ paddingTop: 4 }}>{`${formattedMobile}`}</div>
-          <div style={{ paddingTop: 4 }}>{`${member.email.toLowerCase()}`}</div>
         </div>
       </div>
-      <Divider />
+      <Divider styles={{ width: "100%" }} />
     </div>
   );
 };
 
 const TeamMemberList: React.FC = () => {
+  const navigate = useNavigate();
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
   useEffect(() => {
@@ -77,24 +69,45 @@ const TeamMemberList: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ padding: "8px" }}>
-      <div style={{ position: "absolute", top: 10, right: 10 }}>
+    <div style={{ padding: 8 }}>
+      <div
+        style={{ position: "absolute", top: 10, right: 10 }}
+        onClick={() => navigate("/add")}
+      >
         <FontAwesomeIcon icon={faPlus} size="lg" color="blue" />
       </div>
-      <h1>Team Members</h1>
+      <div style={{ marginTop: 16, fontSize: 32, fontWeight: 600 }}>
+        Team Members
+      </div>
       {teamMembers.length > 0 ? (
         <>
-          <div style={{ fontSize: 16 }}>{`You have ${
-            teamMembers.length
-          } team member${teamMembers.length > 1 ? "" : "s"}`}</div>
-          <Divider />
-
+          <div
+            style={{
+              marginTop: 8,
+              fontSize: 16,
+              color: "grey",
+            }}
+          >{`You have ${teamMembers.length} team member${
+            teamMembers.length > 1 ? "s" : ""
+          }.`}</div>
+          <Divider styles={{ marginTop: 32 }} />
           {teamMembers.map((member) => (
             <TeamMemberItem member={member} />
           ))}
         </>
       ) : (
-        <div style={{ fontSize: 16 }}>You have no team members</div>
+        <>
+          <div
+            style={{
+              marginTop: 8,
+              fontSize: 16,
+              color: "grey",
+            }}
+          >
+            You have no team members
+          </div>
+          <Divider styles={{ marginTop: 32 }} />
+        </>
       )}
     </div>
   );

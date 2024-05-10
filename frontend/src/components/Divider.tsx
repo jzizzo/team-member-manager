@@ -1,9 +1,10 @@
-const Divider = () => (
+const Divider: React.FC<{ styles?: React.CSSProperties }> = ({ styles }) => (
   <hr
     style={{
       borderRadius: 300,
       borderTop: "1px solid lightgrey",
-      width: "95%",
+      width: "100%",
+      ...styles,
     }}
   ></hr>
 );
