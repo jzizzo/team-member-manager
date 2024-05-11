@@ -8,7 +8,6 @@ This app allows you to manage team members. The frontend is a React web app writ
 
 - Node.js + NPM
 - Python 3 + pip
-- Git
 
 ### Local dev
 
