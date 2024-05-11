@@ -148,8 +148,20 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
           required
         />
         <div style={{ marginTop: 12, fontWeight: "bold" }}>Role</div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>Regular - Can't delete members</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{
+              fontWeight: member.role === Role.regular ? 500 : 300,
+              color: member.role === Role.regular ? "black" : "grey",
+            }}
+          >
+            Regular - Can't delete members
+          </div>
           <input
             type="radio"
             name={"role"}
@@ -158,8 +170,21 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
             onChange={handleChange}
           />
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>Admin - Can delete members</div>
+        <Divider styles={{ marginTop: 8 }} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{
+              fontWeight: member.role === Role.admin ? 500 : 300,
+              color: member.role === Role.admin ? "black" : "grey",
+            }}
+          >
+            Admin - Can delete members
+          </div>
           <input
             type="radio"
             name={"role"}
@@ -168,6 +193,7 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
             onChange={handleChange}
           />
         </div>
+        <Divider styles={{ marginTop: 8 }} />
       </form>
       <div
         style={{
