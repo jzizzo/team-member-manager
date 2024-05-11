@@ -45,6 +45,8 @@ const AddEditMember: React.FC<AddEditMemberProps> = ({
     }));
   };
 
+  // Could add form validation here using regex to make sure phone number is just numbers and names are alpha only.
+  // Show inline errors on on validation errors and block the API call.
   const onSave = async () => {
     const url = isEditingMember
       ? `${urlPrefix}/api/team_members/${member.id}`
