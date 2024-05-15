@@ -6,7 +6,7 @@ This app allows you to manage team members. The frontend is a React web app writ
 
 ### Prerequisites
 
-- Node.js + NPM
+- Node.js + NPM + NVM
 - Python 3 + pip
 
 ### Local dev
@@ -23,9 +23,10 @@ Backend:
 Frontend:
 
 1. Navigate to frontend folder `cd frontend`
-2. Install frontend dependencies `npm install`
-3. Start React server `npm start`
-4. Open a web broswer and navigate to `http://localhost:3000/`
+2. `nvm use` (you may need to the `nvm install 20.13.1` if you don't already have this version)
+3. Install frontend dependencies `npm install`
+4. Start React server `npm start`
+5. Open a web broswer and navigate to `http://localhost:3000/`
 
 ## Usage instructions
 
