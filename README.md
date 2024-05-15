@@ -16,9 +16,8 @@ This app currently only supports local dev environment
 Backend:
 
 1. Install backend dependencies `pip install -r requirements.txt`
-2. Migrate the database `python manage.py migrate`
-3. Start the server `python manage.py runserver`
-4. To access a Django dashboard to manage Team Members, open a web browser and navigate to `http://127.0.0.1:8000/api/team_members`
+2. Start the server `python manage.py runserver`
+3. To access a Django dashboard to manage Team Members, open a web browser and navigate to `http://127.0.0.1:8000/api/team_members`
 
 Frontend:
 
