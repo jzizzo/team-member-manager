@@ -18,7 +18,7 @@ const TeamMemberItem: React.FC<{ member: TeamMember }> = ({ member }) => {
     member.role === Role.admin ? " (Admin)" : ""
   }`;
   return (
-    <div key={member.id}>
+    <div>
       <div
         style={{
           borderRadius: 16,
@@ -94,7 +94,7 @@ const TeamMemberList: React.FC = () => {
           }.`}</div>
           <Divider styles={{ marginTop: 32 }} />
           {teamMembers.map((member) => (
-            <TeamMemberItem member={member} />
+            <TeamMemberItem member={member} key={member.id} />
           ))}
         </>
       ) : (
